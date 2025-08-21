@@ -4,12 +4,13 @@ import br.com.Mg.model.Funcionario;
 import br.com.Mg.model.Pessoa;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.time.Period;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -29,36 +30,86 @@ public class Main {
             funcionarios.add(new Funcionario("Heloísa", LocalDate.of(2003, Month.MAY, 24), new BigDecimal("1606.85"), "Eletricista"));
             funcionarios.add(new Funcionario("Helena", LocalDate.of(1996, Month.SEPTEMBER, 2), new BigDecimal("2799.93"), "Gerente"));
 
-
-
-
-            System.out.println("3.2 – Removendo funcionário 'João'");
-            funcionarios.removeIf(f -> f.getNome().equals("João"));
-            System.out.println("Removido----------------------------------------------------------------\n");
-
-
-
-            System.out.println("3.3 – Lista de funcionários atualizada:");
+            System.out.println("3.1 – Inserir todos os funcionários, na mesma ordem e informações da tabela acima.\n");
             funcionarios.forEach(System.out::println);
             System.out.println("----------------------------------------------------------------\n");
 
 
+            System.out.println("3.2 – Removendo funcionário 'João' da lista.");
+            funcionarios.removeIf(f -> f.getNome().equals("João"));
+            System.out.println("----------------------------------------------------------------\n");
 
-            System.out.println("3.4 – Aplicando aumento de 10% no salário");
+
+            System.out.println("3.3 – Imprimir todos os funcionários com todas suas informações. \n");
+            funcionarios.forEach(System.out::println);
+            System.out.println("----------------------------------------------------------------\n");
+
+
+            System.out.println("3.4 – Os funcionários receberam 10% de aumento de salário.\n");
             BigDecimal aumento = new BigDecimal("1.10");
             funcionarios.forEach(f -> f.setSalarioBruto(f.getSalarioBruto().multiply(aumento)));
-            System.out.println("Salários atualizados.");
             funcionarios.forEach(System.out::println);
             System.out.println("----------------------------------------------------------------\n");
 
 
+            System.out.println("3.5 e 3.6 – Funcionários agrupados por função MAP, sendo a chave a “função” e o valor a “lista de funcionários.” \n");
 
             Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarios.stream()
                     .collect(Collectors.groupingBy(Funcionario::getFuncaoExercida));
 
+            funcionariosPorFuncao.forEach((funcao, lista) -> {
+                System.out.println("\nFunção: " + funcao);
+                lista.forEach(System.out::println);
+            });
+            System.out.println("----------------------------------------------------------------\n");
 
 
+            System.out.println("3.8 – Imprimir os funcionários que fazem aniversário no mês 10 e 12.\n");
+            funcionarios.stream()
+                    .filter(f -> f.getDataNascimento()
+                            .getMonth() == Month.OCTOBER || f.getDataNascimento().getMonth() == Month.DECEMBER)
+                    .forEach(System.out::println);
+            System.out.println("----------------------------------------------------------------\n");
 
+
+            System.out.println("3.9 – Imprimir o funcionário com a maior idade, exibir os atributos: nome e idade.\n");
+            Funcionario maisVelho = funcionarios.stream()
+                    .min(Comparator.comparing(Pessoa::getDataNascimento))
+                    .orElse(null);
+
+            if (maisVelho != null) {
+                int idade = Period.between(maisVelho.getDataNascimento(), LocalDate.now()).getYears();
+                System.out.println("Nome: " + maisVelho.getNome() + ", Idade: " + idade);
+            }
+            System.out.println("----------------------------------------------------------------\n");
+
+
+            System.out.println("3.10 – Imprimir a lista de funcionários por ordem alfabética.\n");
+            funcionarios.stream()
+                    .sorted(Comparator.comparing(Pessoa::getNome))
+                    .forEach(System.out::println);
+            System.out.println("----------------------------------------------------------------\n");
+
+
+            System.out.println("3.11 – Imprimir o total dos salários dos funcionários.\n");
+            BigDecimal totalSalarios = funcionarios.stream()
+                    .map(Funcionario::getSalarioBruto)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
+            DecimalFormat formatterSalario = new DecimalFormat("#,##0.00", symbols);
+            System.out.println("Total: " + formatterSalario.format(totalSalarios));
+            System.out.println("----------------------------------------------------------------\n");
+
+
+            System.out.println("3.12 – Imprimir quantos salários mínimos ganha cada funcionário, considerando que o salário mínimo é R$1212.00.\n");
+            BigDecimal salarioMinimo = new BigDecimal("1212.00");
+            funcionarios.forEach(f -> {
+                BigDecimal quantidadeSalariosMinimos = f.getSalarioBruto().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
+                System.out.println(f.getNome() + " ganha " + quantidadeSalariosMinimos + " salários mínimos.");
+            });
+            System.out.println("----------------------------------------------------------------\n");
 
         }
     }
