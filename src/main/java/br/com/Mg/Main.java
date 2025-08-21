@@ -4,7 +4,6 @@ import br.com.Mg.model.Funcionario;
 import br.com.Mg.service.FuncionarioService;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
