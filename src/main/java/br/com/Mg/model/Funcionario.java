@@ -29,8 +29,8 @@ public class Funcionario extends Pessoa{
         String dataFormatada = super.getDataNascimento().format(formatoData);
 
         DecimalFormatSymbols Simbolos = new DecimalFormatSymbols(new Locale("pt", "BR"));
-        DecimalFormat formatterSalario = new DecimalFormat("#,##0.00", Simbolos);
-        String salarioFormatado = formatterSalario.format(this.salarioBruto);
+        DecimalFormat formatarSalario = new DecimalFormat("#,##0.00", Simbolos);
+        String salarioFormatado = formatarSalario.format(this.salarioBruto);
 
         return "Funcionario {" +
                 "nome = '" + super.getNome() + '\'' +
