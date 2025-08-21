@@ -7,11 +7,12 @@
     <groupId>br.com.Mg</groupId>
     <artifactId>Desafio-pratico-Iniflex</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <exec.mainClass>br.com.Mg.Main</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -22,5 +23,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 
 </project>
