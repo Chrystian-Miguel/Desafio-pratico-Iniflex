@@ -70,7 +70,7 @@ Siga os passos abaixo para executar a aplicação a partir do terminal.
 
 4. Execute a classe principal com o seguinte comando Maven:
    ```sh
-   mvn exec:java -Dexec.mainClass="br.com.Mg.Main"
+   mvn exec:java
    ```
 
 *Após a execução, todos os resultados das operações serão impressos diretamente no seu console.*
