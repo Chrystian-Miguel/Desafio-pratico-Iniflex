@@ -1,4 +1,4 @@
-# Teste Prático de Programação - Iniflex
+# Teste Prático de Programação 
 
 ### Descrição
 Considerando que uma indústria possui as pessoas/funcionários abaixo, você deve desenvolver um projeto Java para gerenciar seus dados.
